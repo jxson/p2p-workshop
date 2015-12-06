@@ -1,18 +1,27 @@
+const args = require('yargs').argv
 const net = require('net')
 const debug = require('debug')('client')
+const json = require('duplex-json-stream')
+const format = require('format')
 
-const client = net.connect(1337)
+const socket = net.connect(1337)
+const client = json(socket)
 
 client.on('data', ondata)
 
 process.stdin.on('data', write)
 
-function write(data) {
-  debug('sending: %s', data)
-  client.write(data)
+function write(buffer) {
+  var message = buffer.toString().trim()
+  debug('sending: %s', message)
+  client.write({
+    username: args.username,
+    message: message
+  })
 }
 
 function ondata(data) {
-  debug('received: %s', data)
-  process.stdout.write(data)
+  debug('received: %o', data)
+  var message = format('   %s > %s\n', data.username, data.message)
+  process.stdout.write(message)
 }
