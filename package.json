@@ -9,6 +9,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "debug": "^2.2.0"
+    "debug": "^2.2.0",
+    "stream-set": "^1.1.0"
   }
 }

@@ -1,7 +1,7 @@
 const net = require('net')
 const debug = require('debug')('client')
 
-const client = net.createConnection(1337)
+const client = net.connect(1337)
 
 client.on('data', ondata)
 
