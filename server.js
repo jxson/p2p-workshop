@@ -1,11 +1,14 @@
+const args = require('yargs').argv
 const net = require('net')
 const debug = require('debug')('server')
 const set = require('stream-set')
 const json = require('duplex-json-stream')
+const register = require('register-multicast-dns')
 
 const server = net.createServer(onsocket)
 const sockets = set()
 
+register(args.username + '.local')
 server.listen(1337)
 
 function onsocket(socket) {

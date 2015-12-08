@@ -4,9 +4,10 @@ const debug = require('debug')('client')
 const json = require('duplex-json-stream')
 const format = require('format')
 
-const socket = net.connect(1337)
+const socket = net.connect(1337, args.server + '.local')
 const client = json(socket)
 
+require('lookup-multicast-dns/global')
 client.on('data', ondata)
 
 process.stdin.on('data', write)
